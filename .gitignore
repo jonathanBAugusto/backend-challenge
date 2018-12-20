@@ -1,0 +1,14 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Editors, IDEs
+nbproject
+.buildpath
+.idea
+.vs
+*.sublime-project
+*.sublime-workspace
+_old/
+
+#System Files
+.DS_Store
+Thumbs.db
