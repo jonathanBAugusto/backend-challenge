@@ -9,7 +9,7 @@ código, conhecimento dos frameworks e tecnologias utilizadas.
 
 ## Regras
 
-1. Todo o seu código deve ser disponibilizado num repositório **público** ou **privado** em seu Github ou Bitbucket 
+1. Todo o seu código deve ser disponibilizado num repositório **público** ou **privado** em seu Github, Gitlab ou Bitbucket 
 pessoal. Envie o link para contato@devninjas.com.br ou faça um pull-request;  
 
 2. Desenvolver o projeto utilizando:  
@@ -43,7 +43,7 @@ Esse método deve receber um produto novo e inseri-lo em um banco de dados para 
 {
    "id": 0,
    "sku": 8552515751438644,
-   "title": "Casaco Jaqueta Outletdri Inverno Jacquard",
+   "name": "Casaco Jaqueta Outletdri Inverno Jacquard",
    "price": 109.90,
    "createdAt": "2018-08-27T02:11:43Z",
    "updatedAt": null
@@ -54,7 +54,7 @@ Esse método deve receber um produto novo e inseri-lo em um banco de dados para 
 |-------------|----------|
 | id          | int      |
 | sku         | int      |
-| title       | string   |
+| name        | string   |
 | price       | double   |
 | createdAt   | datetime |
 | updatedAt   | datetime |
@@ -74,7 +74,7 @@ Esse método da API deve retornar o seguinte JSON.
   {
     "id": 1,
     "sku": 8552515751438644,
-    "title": "Casaco Jaqueta Outletdri Inverno Jacquard",
+    "name": "Casaco Jaqueta Outletdri Inverno Jacquard",
     "price": 109.90,
     "createdAt": "2018-08-27T02:11:43Z",
     "updatedAt": "2018-08-27T02:30:20Z"
@@ -82,7 +82,7 @@ Esse método da API deve retornar o seguinte JSON.
   {
     "id": 2,
     "sku": 8552515751438645,
-    "title": "Camiseta Colcci Estampada Azul",
+    "name": "Camiseta Colcci Estampada Azul",
     "price": 79.90,
     "createdAt": "2018-08-27T02:11:43Z",
     "updatedAt": null
