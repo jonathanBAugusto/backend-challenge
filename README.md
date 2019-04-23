@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://devninjas.com.br/assets/img/devninjas.png" width="400">
+  <img src="https://www.devninjas.com.br/wp-content/themes/understrap-child/img/logo-devninjas.png" width="250">
 </p>
 
 # < back >Developer</ end >
