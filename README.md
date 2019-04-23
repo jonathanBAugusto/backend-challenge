@@ -192,7 +192,7 @@ Um pedido por ter um ou mais item.
 - Total é monetário e deve ser maior que zero.
 
 
-### PUT `/v1/orders{{ID_ORDER}}`
+### PUT `/v1/orders/{{ID_ORDER}}`
 
 Esse método atualiza o status para "CANCELED" o pedido de venda informado.
 
