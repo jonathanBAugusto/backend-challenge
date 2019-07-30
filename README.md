@@ -305,7 +305,7 @@ O que NÃO vamos analisar:
 ## Para onde enviar seu repositório
 
 Todo o seu código deve ser disponibilizado num repositório **público** ou **privado** em seu Github, Gitlab ou Bitbucket 
-pessoal. Envie um email para william.hoffmann@devninjas.com.br com o assunto Desafio Backend Developer - [SEU NOME] contendo o link para o repositório que você criou ou faça um pull-request.
+pessoal. Envie um email para william.hoffmann@devninjas.com.br e mariana.ganassin@devninjas.com.br com o assunto Desafio Backend Developer - [SEU NOME] contendo o link para o repositório que você criou ou faça um pull-request.
 
 ## Dúvidas
 
