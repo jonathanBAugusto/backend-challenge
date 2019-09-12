@@ -1,5 +1,7 @@
 <?php
+
 namespace models;
+
 class Product
 {
     public $id;
@@ -19,5 +21,9 @@ class Product
         $this->updated_at = $updated_at;
     }
 
+    public static function fromJson($json)
+    {
+        $jsonObj = json_decode($json, true);
+        return new Product($jsonObj['id'] ?? null, $jsonObj['sku'] ?? null, $jsonObj['name'] ?? null, $jsonObj['price'] ?? null, $jsonObj['created_at'] ?? null, $jsonObj['updated_at'] ?? null) ?? null;
+    }
 }
-

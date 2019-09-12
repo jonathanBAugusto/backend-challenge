@@ -2,7 +2,8 @@
 
 include 'autoload.php';
 
-use controllers\ProductController;
+use controllers\ProductsController;
+use models\Product;
 use routes\Request;
 use routes\Router;
 
@@ -13,8 +14,9 @@ $router->get('/', function() {
 HTML;
 });
 $router->get("/v1/products", function() {
-  return json_encode(ProductController::get());
+  return json_encode(ProductsController::get());
 });
 $router->post('/v1/products', function($request) {
-  var_dump($request->getBody());
+  $content = $request->getContent();
+  return isset($content) ? ProductsController::post(Product::fromJson($content)) : "Sem dados para processar";
 });

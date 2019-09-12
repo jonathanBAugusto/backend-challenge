@@ -2,7 +2,7 @@
 
 namespace connections;
 
-use connections\TableDML;
+use connections\TablesDML;
 
 class Conn
 {
@@ -13,16 +13,20 @@ class Conn
 
     public function __construct()
     {
-        if (createBase($this->database))
-            if (!createTables())
+        if ($this->createBase($this->database))
+            if (!$this->createTables())
                 return null;
             else
                 return null;
     }
 
-    function conn($msgerro = null)
+    function conn($msgerro = null, $database = true)
     {
-        $conn = new mysqli($this->server, $this->user, $this->pass);
+        $conn = null;
+        if($database)
+            $conn = new \mysqli($this->server, $this->user, $this->pass, $this->database);
+        else
+            $conn = new \mysqli($this->server, $this->user, $this->pass);
         //verifica se conseguiu a conexão com os parâmetros definidos
         if (mysqli_connect_errno()) {
             exit(isset($msgerro) ? $msgerro : 'Falha na conexão: ' . mysqli_connect_error());
@@ -37,10 +41,10 @@ class Conn
     {
         $return = false;
 
-        $conn = $this->conn("Falha na conexão ao criar base de dados: ");
+        $conn = $this->conn("Falha na conexão ao criar base de dados: ", false);
 
         //Query para criar (caso já não exista) a base de dados
-        $sql = "CREATE DATABASE IF NOT EXISTS '{$database}' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+        $sql = "CREATE DATABASE IF NOT EXISTS {$database}";
 
         //Condição para retornar se a query foi executada com sucesso :D
         if ($conn->query($sql) === TRUE) {
@@ -62,10 +66,10 @@ class Conn
 
         $return = 0;
 
-        $return += TableDML::products($this->conn($msgerro)) ? 0 : 1;
-        $return += TableDML::customers($this->conn($msgerro)) ? 0 : 1;
-        $return += TableDML::orders($this->conn($msgerro)) ? 0 : 1;
-        $return += TableDML::orderItems($this->conn($msgerro)) ? 0 : 1;
+        $return += TablesDML::products($this->conn($msgerro)) ? 0 : 1;
+        $return += TablesDML::customers($this->conn($msgerro)) ? 0 : 1;
+        $return += TablesDML::orders($this->conn($msgerro)) ? 0 : 1;
+        $return += TablesDML::orderItems($this->conn($msgerro)) ? 0 : 1;
 
         return $return == 0;
     }
