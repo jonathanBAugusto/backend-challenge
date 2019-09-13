@@ -3,6 +3,7 @@
 namespace controllers;
 
 use models\Order;
+use connections\Conn;
 use controllers\OrderItemsController;
 
 class OrdersController
@@ -47,28 +48,30 @@ class OrdersController
             return null;
         $sql = "INSERT INTO ORDERS
         (
+            id,
             customer_id,
-            last_id,
             total,
             status,
             created_at,
             cancel_data,
         )
-        INTO
+        VALUES
         (
-            {$order['buyer']['id']},
             {$order['id']},
+            {$order['buyer']['id']},
             {$order['total']},
             '{$order['status']},'
             '{$order['created_at']}',
-            '{$order['cancel_data']}',
+            '{$order['cancel_data']}'
         )";
         $result = $conn->query($sql);
+        $order_id = $conn->insert_id;
         $conn->close();
         if ($result !== TRUE) {
             return "Error: " . $sql . "<br>" . $conn->error;
         }
-        OrderItemsController::postMult($order['items'], $result);
+        OrderItemsController::postMult($order['items'], $order_id);
+        return $order_id;
     }
     public static function put($id, $status)
     {

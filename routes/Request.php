@@ -46,7 +46,7 @@ class Request implements IRequest
     if ($this->requestMethod === "GET") {
       return;
     }
-    if ($this->requestMethod == "POST") {
+    if ($this->requestMethod == "POST" || $this->requestMethod == "POST") {
       return file_get_contents("php://input");
     }
   }

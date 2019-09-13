@@ -3,8 +3,9 @@
 namespace controllers;
 
 use models\Customer;
+use connections\Conn;
 
-class CustomerController
+class CustomersController
 {
     public static function get()
     {
@@ -13,7 +14,7 @@ class CustomerController
         $sql = "SELECT * FROM CUSTOMERS";
         $result = $conn->query($sql);
         $conn->close();
-        if ($result->num_rows > 0) {
+        if (isset($result) && $result->num_rows > 0) {
             $listCustomers = null;
             while ($customer = $result->fetch_assoc()) {
                 $listCustomers[] = new Customer($customer["id"], $customer["name"], $customer["cpf"], $customer["email"], $customer["created_at"], $customer["updated_at"]);
@@ -37,7 +38,6 @@ class CustomerController
             $customerObj = null;
             while ($customer = $result->fetch_assoc()) {
                 $customerObj = new Customer($customer["id"], $customer["name"], $customer["cpf"], $customer["email"], $customer["created_at"], $customer["updated_at"]);
-                break;
             }
             return $customerObj;
         } else {
@@ -46,30 +46,34 @@ class CustomerController
     }
     public static function post(Customer $customer)
     {
+        
         $conn = (new Conn())->conn();
-        if (!isset($customer))
+        if (!isset($customer) || Customer::validator($customer) != true)
             return null;
         $sql = "INSERT INTO CUSTOMERS 
         (
+            id,
             name,
             cpf,
             email,
             created_at,
             updated_at)
-        INTO
+        VALUES
         (
+            {$customer->id},
             '{$customer->name}',
             '{$customer->cpf}',
             '{$customer->email}',
-            '{$customer->create_at}',
-            '{$customer->update_at}',
+            '{$customer->created_at}',
+            '{$customer->updated_at}'
         )";
         $result = $conn->query($sql);
+        $error = $conn->error;
         $conn->close();
         if ($result === TRUE) {
-            return true;
+            return $result;
         } else {
-            return "Error: " . $sql . "<br>" . $conn->error;
+            return "Error: " . PHP_EOL . $error;
         }
     }
 }

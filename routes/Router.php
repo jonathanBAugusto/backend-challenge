@@ -1,21 +1,24 @@
 <?php
+
 namespace routes;
+
 class Router
 {
   private $request;
   private $supportedHttpMethods = array(
     "GET",
-    "POST"
+    "POST",
+    "PUT"
   );
   function __construct(IRequest $request)
   {
-   $this->request = $request;
+    $this->request = $request;
   }
   function __call($name, $args)
   {
     list($route, $method) = $args;
-    if(!in_array(strtoupper($name), $this->supportedHttpMethods))
-    {
+    var_dump($route);
+    if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
       $this->invalidMethodHandler();
     }
     $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
@@ -23,8 +26,7 @@ class Router
   private function formatRoute($route)
   {
     $result = rtrim($route, '/');
-    if ($result === '')
-    {
+    if ($result === '') {
       return '/';
     }
     return $result;
@@ -41,13 +43,34 @@ class Router
   {
     $methodDictionary = $this->{strtolower($this->request->requestMethod)};
     $formatedRoute = $this->formatRoute($this->request->requestUri);
+    $this->getMethodWithVars($methodDictionary, $formatedRoute);
     $method = $methodDictionary[$formatedRoute];
-    if(is_null($method))
-    {
+    if (is_null($method)) {
       $this->defaultRequestHandler();
       return;
     }
     echo call_user_func_array($method, array($this->request));
+  }
+
+  function getMethodWithVars($methods, $route)
+  {
+    if(isset($methods[$route]))
+      return $methods[$route];
+    $eachsMethod = explode('/', $route);
+    $routeFinal = null;
+    foreach ($eachsMethod as $value) {
+      $routeFinal .= isset($routeFinal) ? ('/' . $value) : $value;
+      if(!isset($methods[$routeFinal])){
+        $routeBef = str_replace('/' . $value, '', $routeFinal);
+        var_dump($methods);
+        echo PHP_EOL;
+
+      }
+      if (strpos($value, '{') && strpos($value, '}')) 
+      {
+      }
+    }
+    die();
   }
   function __destruct()
   {

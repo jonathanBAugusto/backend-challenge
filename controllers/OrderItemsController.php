@@ -6,14 +6,12 @@ use models\OrderItem;
 
 class OrderItemsController
 {
-    public static function get($order_id = null)
+    public static function get($order_id)
     {
         $conn = (new Conn())->conn();
 
-        $sql = "SELECT * FROM ORDERITEMS";
-        if (isset($id)) {
-            $sql .= " WHERE order_id = {$order_id}";
-        }
+        $sql = "SELECT * FROM ORDERITEMS WHERE order_id = {$order_id}";
+        
         $result = $conn->query($sql);
         $conn->close();
         if ($result->num_rows > 0) {
@@ -30,7 +28,7 @@ class OrderItemsController
     {
         $items = json_decode($itemsJson, true);
         $sqlToReplace = "INSERT INTO ORDERITEMS (order_id, produto_id, amount, price_unit, total)
-            VALUE (%order_id%, %produto_id%, %amount%, %price_unit%, %total%);";
+            VALUES (%order_id%, %produto_id%, %amount%, %price_unit%, %total%);";
         $sql = "";
         foreach ($items as $item) {
             $sqlAux = str_replace('%order_id%', $order_id, $sqlToReplace);
