@@ -17,7 +17,6 @@ class Router
   function __call($name, $args)
   {
     list($route, $method) = $args;
-    var_dump($route);
     if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
       $this->invalidMethodHandler();
     }
@@ -60,15 +59,18 @@ class Router
     $routeFinal = null;
     foreach ($eachsMethod as $value) {
       $routeFinal .= isset($routeFinal) ? ('/' . $value) : $value;
+      echo($routeFinal);
       if(!isset($methods[$routeFinal])){
         $routeBef = str_replace('/' . $value, '', $routeFinal);
-        var_dump($methods);
-        echo PHP_EOL;
-
-      }
-      if (strpos($value, '{') && strpos($value, '}')) 
-      {
-      }
+        if(isset($methods[$routeBef . '{'])){
+          echo('OPA');
+          if (strpos($value, '{') && strpos($value, '}')) 
+          {
+            var_dump($routeBef . $value);
+          }
+        }
+      }else 
+        echo('CERTO');
     }
     die();
   }
